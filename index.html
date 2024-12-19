@@ -116,33 +116,26 @@
             const images = document.querySelectorAll('#guessing-display > div');
             [...images].forEach(image => {
                 image.style.transition = '300ms ease-in-out';
-                image.querySelector('img').style.transition = '300ms ease-in-out';
 
                 image.onclick = () => {
                     if (image.dataset.identity === `${snowflake}`) {
-                        [...images].forEach((a) => {
-                            if (a !== image) {
-                                a.style.opacity = '0';
-                                window.setTimeout(() => {
-                                    a.remove(0);
-                                }, 300)
-                            }
-                        });
-
-                        image.style.height = "200px";
-                        image.style.width = "200px";
-
-                        image.querySelector('img').style.height = "200px";
-                        image.querySelector('img').style.width = "200px";
+                        document.querySelector('#guessing-display').style.opacity = '0';
+                        window.setTimeout(() => {
+                            displaySnowflake(image);
+                        }, 1000);
                     } else {
                         image.style.opacity = "0";
                     }
                 }
             })
+        }
 
-
-
-
+        function displaySnowflake(el) {
+            console.log(el);
+            document.querySelector('#guessing-display').style.display = 'none';
+            document.querySelector('#winner-winner-chicken-dinner').append(el);
+            document.querySelector('#winner-winner-chicken-dinner').style.visibility = '';
+            document.querySelector('#winner-winner-chicken-dinner').style.opacity = '1';
         }
 
         window.onload = () => {
@@ -152,9 +145,9 @@
     </script>
 
 </head>
-<body style="font-family: 'Montserrat Alternates', sans-serif;background-image: url('./snowy-background.jpg'); background-size: cover;background-repeat:no-repeat;background-position: bottom; height:100vh;width:100vw;overflow: hidden;">
+<body style="font-family: 'Montserrat Alternates', sans-serif;background-image: url('./assets/snowy-background.jpg'); background-size: cover;background-repeat:no-repeat;background-position: bottom; height:100vh;width:100vw;overflow: hidden;">
     <header>
-        <h1 style="color:transparent; font-size: 16px; text-shadow: 1px 1px 0 rgba(255, 255, 255, .3), -1px -1px rgba(10, 10, 10, .3), 1px 1px 10px rgba(10, 10, 10, .3);position:fixed;bottom:0">Lyssn Secret Snowflake</h1>
+        <h1 style="color:transparent; font-size: 19px; text-shadow: 1px 1px 0 rgba(255, 255, 255, .3), -1px -1px rgba(10, 10, 10, .3), -1px -1px 1px rgba(10, 10, 10, .3);position:fixed;bottom:0">Lyssn Secret Snowflake</h1>
     </header>
     <main>
         <div id="opening-messages" style="text-align:center;font-size:40px;font-weight:700;color:#232527;text-shadow:0 -2px 2px white;">
@@ -179,8 +172,11 @@
             <div data-identity="10" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Sasha-160x160.jpeg" height="100px" width="100px"></div>
             <div data-identity="11" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/jordan-160x160.jpg" height="100px" width="100px"></div>
             <div data-identity="12" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/11/lyssn-people-2-160x160.jpg" height="100px" width="100px"></div>
-            <div data-identity="12" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Angela-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="13" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Angela-160x160.jpeg" height="100px" width="100px"></div>
             <div data-identity="14" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Roisin-160x160.jpeg" height="100px" width="100px"></div>
+        </div>
+        <div id="winner-winner-chicken-dinner" style="visibility:hidden;opacity:0;position:fixed;top:0;bottom:0;right:0;left:0;display:flex;flex-direction: column;justify-content: center;align-items: center;transition:300ms ease-in-out;">
+            <p style="font-size: 24px;font-weight:700">Congrats! Your Secret Snowflake Was</p>
         </div>
     </main>
 </body>
