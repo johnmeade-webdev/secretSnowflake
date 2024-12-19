@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:https="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>2024 Lyssn Secret Snowflake</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <script>
+
+        let guesser, snowflake;
+
+        function showOpeningMessages() {
+            const messageEls = document.querySelector('#opening-messages').children;
+            let currentMessageIndex = 0;
+
+            displayNextMessage();
+            const messageInterval = setInterval(displayNextMessage, 4000);
+
+            function displayNextMessage() {
+                const prevEl = messageEls[currentMessageIndex - 1];
+                if (prevEl) {
+                    prevEl.style.opacity = "0";
+                }
+
+                const el = messageEls[currentMessageIndex];
+                if (el) {
+                    el.style.transition = "1s ease-in-out";
+                    el.style.opacity = "1";
+                }
+
+                currentMessageIndex++;
+                if (currentMessageIndex > messageEls.length) {
+                    document.querySelector("#input-div").style.opacity = "1";
+                    clearInterval(messageInterval);
+                }
+            }
+        }
+
+        function checkIdentity(id) {
+            switch (id) {
+                case "qae3c":
+                    return 1;
+                case "1avsb":
+                    return 2;
+                case "l1uws":
+                    return 3;
+                case "vkaa1":
+                    return 4;
+                case "7v3sj":
+                    return 5;
+                case "u9qhh":
+                    return 6;
+                case "5k8s9":
+                    return 7;
+                case "2zlia":
+                    return 8;
+                case "v0kfv":
+                    return 9;
+                case "jqcmw":
+                    return 10;
+                case "t340q":
+                    return 11;
+                case "h6wub":
+                    return 12;
+                case "1qw1q":
+                    return 13;
+                case "ousxu":
+                    return 14;
+                default:
+                    return 'no such code';
+            }
+        }
+
+        const snowflakeKey = {
+            1: 8,
+            2: 14,
+            3: 11,
+            4: 12,
+            5: 13,
+            6: 2,
+            7: 9,
+            8: 6,
+            9: 3,
+            10: 1,
+            11: 5,
+            12: 10,
+            13: 4,
+            14: 7
+        }
+
+        function setUpForGuessing(e) {
+            const inputValue = document.querySelector("#code-input").value;
+            if (inputValue.length === 5) {
+                guesser = checkIdentity(inputValue);
+
+                if (guesser !== 'no such code') {
+                    snowflake = snowflakeKey[guesser];
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+
+            document.querySelector('#input-div').style.opacity = '0';
+
+            window.setTimeout(() => {
+                document.querySelector('#input-div').style.visibility = 'hidden';
+                document.querySelector('#guessing-display').style.visibility = '';
+                document.querySelector('#guessing-display').style.opacity = '1';
+                }, 1000);
+
+            const images = document.querySelectorAll('#guessing-display > div');
+            [...images].forEach(image => {
+                image.style.transition = '300ms ease-in-out';
+                image.querySelector('img').style.transition = '300ms ease-in-out';
+
+                image.onclick = () => {
+                    if (image.dataset.identity === `${snowflake}`) {
+                        [...images].forEach((a) => {
+                            if (a !== image) {
+                                a.style.opacity = '0';
+                                window.setTimeout(() => {
+                                    a.remove(0);
+                                }, 300)
+                            }
+                        });
+
+                        image.style.height = "200px";
+                        image.style.width = "200px";
+
+                        image.querySelector('img').style.height = "200px";
+                        image.querySelector('img').style.width = "200px";
+                    } else {
+                        image.style.opacity = "0";
+                    }
+                }
+            })
+
+
+
+
+        }
+
+        window.onload = () => {
+            showOpeningMessages();
+        }
+
+    </script>
+
+</head>
+<body style="font-family: 'Montserrat Alternates', sans-serif;background-image: url('./assets/snowy-background.jpg'); background-size: cover;background-repeat:no-repeat;background-position: bottom; height:100vh;width:100vw;overflow: hidden;">
+    <header>
+        <h1 style="color:transparent; font-size: 16px; text-shadow: 1px 1px 0 rgba(255, 255, 255, .3), -1px -1px rgba(10, 10, 10, .3), 1px 1px 10px rgba(10, 10, 10, .3);position:fixed;bottom:0">Lyssn Secret Snowflake</h1>
+    </header>
+    <main>
+        <div id="opening-messages" style="text-align:center;font-size:40px;font-weight:700;color:#232527;text-shadow:0 -2px 2px white;">
+            <p style="opacity: 0; transition: 2s ease-in-out">Happy Holidays!</p>
+            <p style="opacity: 0; transition: 2s ease-in-out">Your secret snowflake thought long and hard...</p>
+            <p style="opacity: 0; transition: 2s ease-in-out">and thought some more...</p>
+            <p style="opacity: 0; transition: 2s ease-in-out">And then they thought of the perfect gift <em>just for you!</em></p>
+        </div>
+        <div id="input-div" style="text-align: center; opacity: 0; transition: opacity 1s ease-in-out;">
+            <input id="code-input" type="text" oninput="setUpForGuessing()" style="background-color: rgba(255, 255, 255, .4); text-align:center; font-size: 30px;border:10px solid rgba(45, 45, 45, .3);border-radius: 4px;padding:10px;" placeholder="enter code to guess"></input>
+        </div>
+        <div id="guessing-display" style="visibility:hidden;opacity:0;display:flex;flex-wrap:wrap;position:fixed;top:0;bottom:0;left:0;right:0;align-content:center;justify-content: center;cursor:pointer;transition: opacity 1s ease-in-out;">
+            <div data-identity="1" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/02/Emily-HS-1-of-1-132-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="2" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2023/12/20231219_125942_1703016165139-160x160.png" height="100px" width="100px"></div>
+            <div data-identity="3" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/09/Tina-Soma-web-160x160.jpg" height="100px" width="100px"></div>
+            <div data-identity="4" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Mike-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="5" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/02/Headshot-3-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="6" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/07/Laura-headshot-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="7" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Sarah-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="8" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/11/EMPLOYEE-LYSSN-2-160x160.jpg" height="100px" width="100px"></div>
+            <div data-identity="9" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Elizabeth-160x160.jpg" height="100px" width="100px"></div>
+            <div data-identity="10" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Sasha-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="11" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/jordan-160x160.jpg" height="100px" width="100px"></div>
+            <div data-identity="12" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2024/11/lyssn-people-2-160x160.jpg" height="100px" width="100px"></div>
+            <div data-identity="12" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Angela-160x160.jpeg" height="100px" width="100px"></div>
+            <div data-identity="14" style="border-radius:30px;overflow:hidden;margin:2px;"><img src="https://www.lyssn.io/wp-content/uploads/2022/07/Roisin-160x160.jpeg" height="100px" width="100px"></div>
+        </div>
+    </main>
+</body>
+</html>
